@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <title>MD5 File Hasher</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <header><h1>MD5 File Hasher</h1></header>
+
+  <div class="fileform">
+    <div id="fileformlabel"></div>
+    <div class="selectbutton">Choose file</div>
+    <input type="file" name="file" id="file" onchange="get_name(this.value);" />
+  </div>
+  <button id="upload-button" class="runbutton" style="margin-top: 10px;" onclick="upload()">Run task</button>
+  <p id="result-id">Id:</p>
+  <hr style="margin-top: 20px"/>
+  <header><h2>Result view</h2></header>
+  <div>
+    <input id="id-input" class="idinput" type="text"/>
+    <button id="get-result-button" class="runbutton" onclick="get_task_info()">Get result</button>
+  </div>
+  <p id="result"></p>
+</body>
+
+</html>

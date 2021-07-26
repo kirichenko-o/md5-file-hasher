@@ -1,2 +1,4 @@
 .idea
 venv
+backend/input_files
+backend/worker_logs

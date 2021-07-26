@@ -1,0 +1,69 @@
+version: "3.9"
+
+volumes:
+  input_files:
+  worker_logs:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT}:5432
+
+  rabbitmq:
+    image: rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+    ports:
+      - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_PORT_ALT}:15672
+
+  redis:
+    image: redis:latest
+    ports:
+      - ${REDIS_PORT}:6379
+
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    command: bash -c "alembic upgrade head && uvicorn api.app:app --host 0.0.0.0 --reload"
+    volumes:
+      - ./backend:/usr/src/backend
+      - input_files:/usr/src/backend/input_files
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+
+  worker:
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    command: celery -A backend.worker.app worker --loglevel=INFO
+    volumes:
+      - ./backend:/usr/src/backend
+      - input_files:/usr/src/backend/input_files
+      - worker_logs:/usr/src/backend/worker_logs
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgres
+
+  web:
+    image: nginx:latest
+    ports:
+      - 8080:80
+    volumes:
+      - ./web:/usr/share/nginx/html
+    depends_on:
+      - api
