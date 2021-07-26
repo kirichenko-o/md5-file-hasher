@@ -33,4 +33,4 @@ $ docker-compose up -d --build
 ```
 $ docker-compose up -d --build --scale worker=<count>
 ```
-После этого приложение будет доступно на http://localhost:8000
+После этого приложение будет доступно на http://localhost:8080
