@@ -1,36 +1,79 @@
-# MD5 File Hasher (Тестовое задание)
+# MD5 File Hasher (Test task)
 
-Сервис позволяет посчитать MD5 хеш для файла (расчет происходит в фоновом режиме).
+This app allows computing MD5 hash of files in the background using Celery workers.
 
-### Стек:
+## Built With:
 
-FastAPI
+* [FastAPI](https://fastapi.tiangolo.com/): a high performance web framework for building APIs with Python.
+* [Celery](https://celeryproject.org/): an asynchronous task queue or job queue which is based on distributed message passing.
+* [RabbitMQ](https://www.rabbitmq.com/): a message broker used to route messages between API and the workers from Celery.
+* [Redis](https://redis.io/): a database to store results and process status from the tasks.
+* [PostgreSQL](https://www.postgresql.org/): an object-relational database to store computed md5 hesh.
+* [SqlAlchemy](https://www.sqlalchemy.org/): an object-relational mapper for Pytho
+* [Alembic](https://alembic.sqlalchemy.org/): a database migrations tool for SQLAlchemy.
 
-Celery + RabbitMQ + Redis
-
-PostgreSQL + SqlAlchemy + Alembic
-
-## Описание обработчиков REST API: 
+## Available Endpoints
 
 ### POST /upload
 
-Принимает на вход файл для расчета, возвращает **id** запроса на вычисление, по которому позже можно получить результат.
+Run task for computation MD5 hash and return identifier of computation request.
+Information about file and task will be saved to the database.
 
-### GET /get_task_info
+**Input**
 
-Принимает **id** запроса, который был возвращен эндпойнтом **upload**. Возвращает информацию о файле и статусе выполнения задачи. Если задача успешно завершена, в ответе также будет посчитанный хеш. 
+```
+file
+```
 
-## Запуск (Docker)
+**Output**
+```
+{
+  "id": 123
+}
+```
 
-Решение полностью докенезированно, для запуска достаточно достаточно в папке проекта выполнить команду:
+### GET /get_task_info/\<id\>
+
+Return information about file and task by the identifier of a computation request.
+If the task is successfully completed the response will also contain the computed hash.
+
+**Input**
+
+```
+id
+```
+
+**Output**
+```
+{
+    "id": 123,
+    "task_state": "SUCCESS",
+    "original_file_name": "sample_file.jpg",
+    "md5_hash": "e3921603773aa61a1a31e97db61c1453",
+    "created_date": "2021-07-23T19:18:05.849634"
+}
+```
+
+## Install
+
+1. Make sure you have cloned this repository:
+
+```
+$ git clone https://github.com/kirichenko-o/md5-file-hasher
+```
+
+2. Install [Docker](https://www.docker.com/get-started). To run the docker images prepare your environment variables in the ~/.env file. Then run the command (it should be executed from the project root directory):
 
 ```
 $ docker-compose up -d --build
 ```
 
-Для запуска с несколькими worker'ами выполните следующую команду с указанием необходимого количества worker'ов **\<count\>**:
+3. To run multiple workers run the command with the necessary number of workers **\<count\>**:
 
 ```
 $ docker-compose up -d --build --scale worker=<count>
 ```
-После этого приложение будет доступно на http://localhost:8080
+
+4. Open http://localhost:8080
+
+![img.png](./docs/img.png?raw=true)
