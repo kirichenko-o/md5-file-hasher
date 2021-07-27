@@ -22,7 +22,7 @@ def calculate_md5_hash(file):
 @app.task(base=BaseDbTask, bind=True)
 def calculate_md5_hash_task(self, id):
     """
-    Task for computation mdf hesh
+    Task for computation mdf hash
 
     :param self: BaseDbTask
     :param id: int, identifier of FileInfo record
@@ -46,7 +46,7 @@ def calculate_md5_hash_task(self, id):
 
         logger.log(f"Task {id}: SUCCESS Result: {result}")
 
-        return {"hesh": result}
+        return {"hash": result}
     except Exception as ex:
         if logger is not None:
             logger.log(f"Task {id}: ERROR {ex}")

@@ -62,7 +62,7 @@ def process_exception(ex):
 @app.post("/upload", status_code=status.HTTP_201_CREATED)
 async def upload(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
     """
-    Save file and run task for computation mdf hesh
+    Save file and run task for computation mdf hash
     Information about file and task will be saved to the database
 
     :param file: UploadFile
@@ -96,7 +96,7 @@ async def upload(file: UploadFile = File(...), db: AsyncSession = Depends(get_db
 @app.get("/get_task_info/{id}", status_code=status.HTTP_200_OK)
 async def get_task_info(id: int, db: AsyncSession = Depends(get_db)):
     """
-    Return information about task for computation mdf hesh
+    Return information about task for computation mdf hash
     (result, task state and so on)
 
     :param id: int, identifier of FileInfo record
