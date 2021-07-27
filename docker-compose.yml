@@ -18,7 +18,7 @@ services:
       - ${DB_PORT}:5432
 
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:3.8.19
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}

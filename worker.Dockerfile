@@ -5,7 +5,7 @@ WORKDIR /usr/src
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-COPY /../.env .
+COPY .env .
 COPY requirements.txt .
 COPY /backend/config.py .
 COPY /backend /usr/src/backend

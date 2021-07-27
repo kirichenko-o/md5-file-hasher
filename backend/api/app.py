@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, status, File, UploadFile, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import exc
@@ -18,6 +19,11 @@ from .dependencies import get_db
 CHUNK_SIZE = 1024
 
 app = FastAPI()
+
+app.add_middleware(
+    TrustedHostMiddleware,
+    allowed_hosts=conf.get('ALLOWED_HOSTS', ['*']).split(',')
+)
 
 app.add_middleware(
     CORSMiddleware,
