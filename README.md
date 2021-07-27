@@ -2,7 +2,7 @@
 
 This app allows computing MD5 hash of files in the background using Celery workers.
 
-## Built With:
+## Built With
 
 * [FastAPI](https://fastapi.tiangolo.com/): a high performance web framework for building APIs with Python.
 * [Celery](https://celeryproject.org/): an asynchronous task queue or job queue which is based on distributed message passing.
