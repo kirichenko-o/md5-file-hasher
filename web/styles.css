@@ -58,7 +58,7 @@ body {
   width: 280px;
 }
 
-.runbutton {
+.gray-btn {
     background-color: #A2A3A3;
     border: 1px solid #939494;
     border-radius: 2px;
@@ -69,13 +69,13 @@ body {
     overflow: hidden;
     padding: 2px 6px;
     text-align: center;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
     width: 114px;
     font-family: serif;
 }
 
-.idinput {
-    height: 30px;
+.id-input {
+    height: 28px;
     border: 1px solid #CCCCCC;
     border-radius: 2px;
     width: 276px;
