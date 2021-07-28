@@ -1,18 +1,16 @@
+import uuid
+from pathlib import Path
+
+import aiofiles
 from fastapi import FastAPI, HTTPException, status, File, UploadFile, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import exc
-
-import aiofiles
-import uuid
-from pathlib import Path
 
 from backend.db.schema import FileInfo
 from backend.worker.tasks import calculate_md5_hash_task
 from backend.config import conf
-
 from .dependencies import get_db
 
 # Size of chunks for writing file

@@ -1,9 +1,11 @@
+URL = "http://localhost:8000";
+
 function get_name(str){
-  if (str.lastIndexOf('\\')) {
-      var i = str.lastIndexOf('\\')+1;
+  if (str.lastIndexOf("\\")) {
+      var i = str.lastIndexOf("\\") + 1;
   }
   else {
-      var i = str.lastIndexOf('/')+1;
+      var i = str.lastIndexOf("/") + 1;
   }
 
   var filename = str.slice(i);
@@ -36,7 +38,7 @@ function upload() {
   const request = new XMLHttpRequest();
 
   formData.set("file", fileInput.files[0]);
-  request.open("POST", "http://localhost:8000/upload");
+  request.open("POST", URL + "/upload");
 
   fileformlabel.innerHTML = "";
   fileInput.value = "";
@@ -60,18 +62,18 @@ function get_task_info() {
   const idInput = document.getElementById("id-input");
 
   if (!idInput.value) {
-    alert("Please set id!");
+    alert("Please set Id!");
     return;
   }
 
   if (!/^\d+$/.test(idInput.value)) {
-    alert("Please set correct id!");
+    alert("Please set correct Id!");
     return;
   }
 
   const resultEl = document.getElementById("result");
   const request = new XMLHttpRequest();
-  request.open("GET", "http://localhost:8000/get_task_info/" + idInput.value);
+  request.open("GET", URL + "/get_task_info/" + idInput.value);
 
   idInput.value = "";
   resultEl.innerHTML = "Loading...";
@@ -83,7 +85,7 @@ function get_task_info() {
             "<b>Id: </b>" + json.id + "<br>" +
             "<b>Task state: </b>" + json.task_state + "<br>" +
             "<b>File name: </b>" + json.original_file_name + "<br>" +
-            "<b>Hash: </b>" + json.md5_hash;
+            "<b>Hash: </b>" + (json.md5_hash || "");
     } else {
       resultEl.innerHTML = "";
       alert("The remote server returned an error: \n\r" + request.responseText);

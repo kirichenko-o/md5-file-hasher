@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
 from .app import app
-from backend.config import conf
+from backend.config import get_db_conn_str
 
 
 class BaseDbTask(app.Task):
@@ -15,8 +16,6 @@ class BaseDbTask(app.Task):
     @property
     def db(self):
         if self._db_session is None:
-            engine = create_engine(
-                f"postgresql://{conf.get('DB_USER')}:{conf.get('DB_PASSWORD')}@postgres:{conf.get('DB_PORT')}/{conf.get('DB_NAME')}"
-            )
+            engine = create_engine(get_db_conn_str())
             self._db_session = scoped_session(sessionmaker(bind=engine))
         return self._db_session
