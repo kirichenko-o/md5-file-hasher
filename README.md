@@ -2,14 +2,14 @@
 
 This app allows computing MD5 hash of files in the background using Celery workers.
 
-## Built With:
+## Built With
 
 * [FastAPI](https://fastapi.tiangolo.com/): a high performance web framework for building APIs with Python.
 * [Celery](https://celeryproject.org/): an asynchronous task queue or job queue which is based on distributed message passing.
 * [RabbitMQ](https://www.rabbitmq.com/): a message broker used to route messages between API and the workers from Celery.
 * [Redis](https://redis.io/): a database to store results and process status from the tasks.
-* [PostgreSQL](https://www.postgresql.org/): an object-relational database to store computed md5 hesh.
-* [SqlAlchemy](https://www.sqlalchemy.org/): an object-relational mapper for Pytho
+* [PostgreSQL](https://www.postgresql.org/): an object-relational database to store computed MD5 hash.
+* [SqlAlchemy](https://www.sqlalchemy.org/): an object-relational mapper for Python.
 * [Alembic](https://alembic.sqlalchemy.org/): a database migrations tool for SQLAlchemy.
 
 ## Available Endpoints
