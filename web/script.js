@@ -47,8 +47,10 @@ function upload() {
     if(request.status === 201) {
       document.getElementById("result-id").innerHTML =
         JSON.parse(request.responseText).id + " (use this value for getting result)";
+    } else if (request.responseText) {
+      alert("The remote server returned an error: \n\r" + JSON.parse(request.responseText).detail);
     } else {
-      alert("The remote server returned an error: \n\r" + request.responseText);
+      alert("Unrecognized error")
     }
 
     uploadButton.innerText = "Run task";
@@ -86,9 +88,11 @@ function get_task_info() {
             "<b>Task state: </b>" + json.task_state + "<br>" +
             "<b>File name: </b>" + json.original_file_name + "<br>" +
             "<b>Hash: </b>" + (json.md5_hash || "");
-    } else {
+    } else if (request.responseText) {
       resultEl.innerHTML = "";
-      alert("The remote server returned an error: \n\r" + request.responseText);
+      alert("The remote server returned an error: \n\r" + JSON.parse(request.responseText).detail);
+    } else {
+      alert("Unrecognized error")
     }
   }
 
